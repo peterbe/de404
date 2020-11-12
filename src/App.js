@@ -40,6 +40,17 @@ function App() {
         </p>
       )}
       {searchIndex && logLines && (
+        <button
+          type="button"
+          onClick={() => {
+            const copy = [...logLines].sort(() => Math.random() - 0.5);
+            setLogLines(copy);
+          }}
+        >
+          Shuffle log files
+        </button>
+      )}
+      {searchIndex && logLines && (
         <Compare logLines={logLines} searchIndex={searchIndex} />
       )}
     </div>
@@ -60,10 +71,6 @@ function Compare({ logLines, searchIndex }) {
     let bestMatch = null;
     let bestRating = 0;
 
-    // const slashIndex = url.indexOf("/");
-    // const start = url.slice(0, url.indexOf("/"));
-    // console.log(url, slashIndex, start);
-
     for (const key of keys) {
       if (url.slice(0, 5) !== key.slice(0, 5)) {
         // Don't even bother if the first 5 characters are different
@@ -78,9 +85,6 @@ function Compare({ logLines, searchIndex }) {
         bestMatch = key;
       }
     }
-    // const { bestMatch } = findBestMatch(url, keys);
-    // console.log({ url, bestMatch });
-
     return { bestMatch, rating: bestRating };
   }
 
